@@ -27,10 +27,12 @@ public void analyze(loc projectloc){
 	
 	units = { unit(method, sloc(method, docs), cc(method)) | <loc class, loc method> <- mthds };
 	
-	for(u <- toList(units)[..10]){
+	for(u <- toList(badUnits(units))[..10]){
 		println(u);
 	}
 }
+
+public set[Unit] badUnits(set[Unit] units) = { u | u : unit(_, linesOfCode, cyclomaticComplexity) <- units, linesOfCode > 20 || cyclomaticComplexity > 10 };
 
 private set[str] _docs(M3 m3) = ({} | it + toSet(readFileLines(l)) | <_,l> <- m3@documentation );
 
