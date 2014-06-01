@@ -3,14 +3,17 @@ module metrics::CyclomaticComplexity
 import lang::java::m3::AST;
 import lang::java::m3::Core;
 
-public num cc(loc code) = cc(getMethodAST(code), true);
+public num cc(loc code) = cc_(getMethodAST(code));
+private num cc_([Declaration] /method(_,_,_,_, Statement impl)) = cc(impl);
+private num cc_([Declaration] /constructor(_,_,_,Statement impl)) = cc(impl); 
+private num cc_(_) = 0;
 
 @doc {
 Computes the complexity of the given sub-AST.
 Complexity increases for the following: break, case, catch, continue, do-while, foreach, for, if, if-else, throw, while, 
 return that is not the last statement and for boolean expressions (&&, ||).
 }
-public int cc(Statement stmnt, bool strict){
+public int cc(Statement stmnt, bool strict = true){
     int i = 1;
     int retCount = -1;
     visit(stmnt){
