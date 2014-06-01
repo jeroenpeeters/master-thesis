@@ -1,5 +1,6 @@
 module metrics::Volume
 
+import Prelude;
 import lang::java::m3::Core;
 import lang::java::m3::AST;
 
