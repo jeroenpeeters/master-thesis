@@ -11,4 +11,4 @@ public num sloc(loc code, set[str] comments) = sloc(getMethodAST(code), comments
 public num sloc([Declaration] /method(_,_,_,_, Statement impl), set[str] comments) = sloc(impl, comments);
 public num sloc([Declaration] /constructor(_,_,_,Statement impl), set[str] comments) = sloc(impl, comments); 
 public num sloc(Statement impl, set[str] comments) = sum([ 1 | line <- readFileLines(impl@src), size(trim(line))>0, line notin comments ] - 2);
-public num sloc(_, _) = 0;
+public num sloc(_, _) = 0;	
